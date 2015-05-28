@@ -135,11 +135,8 @@ function show_connections(matches){
         for (var i = 0; i < matches.length; i++){
             var word_container = document.createElement("div");
                 word_container.className = "new_match";
-<<<<<<< HEAD
                 word_container.innerHTML = "Match: " + matches[i].name + "<br> Percentage Compatible: " + (parseFloat(matches[i].percentage_matched*100)).toFixed(2)+ "%";
-=======
-                word_container.innerHTML = "Match: " + matches[i].name + "<br> Percentage Compatible: " + (matches[i].percentage_matched*100)+ "%";
->>>>>>> origin/master
+
                 word_container.addEventListener("click", show_connection);
                 match_container.appendChild(word_container);
         }

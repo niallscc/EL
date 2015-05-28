@@ -123,13 +123,9 @@ class Get_User_Data {
             $other_distance = (int) $other["distance"];
             $max_other_distance = max($max_other_distance, $other_distance);
             $min_other_distance = min($min_other_distance, $other_distance);
-<<<<<<< HEAD
             if ($max_other_distance > 3956) {
                 $max_other_distance = 3956;
-=======
-            if ($max_other_distance > 200) {
-                $max_other_distance = 200;
->>>>>>> origin/master
+
                 $min_other_distance = 0;
                 break;
             }
@@ -175,16 +171,11 @@ class Get_User_Data {
             // Calculate the percentage matched by the percentage matched,
             // weighted by locality to the person.
             $match_percentage = $num_matched/($num_matched + $num_not_matched);
-<<<<<<< HEAD
+
             $other_distance = min(3956, (int)$other["distance"] - $min_other_distance);
             $max_weight = 5; // in percentages
             $dist_weight = (1.0 - $other_distance / $other_distance_split) * ($max_weight / 100);
             error_log($match_percentage . ":" . $other_distance . ":" . $dist_weight);
-=======
-            $other_distance = min(200, (int)$other["distance"] - $min_other_distance);
-            $max_weight = 5; // in percentages
-            $dist_weight = (1.0 - $other_distance / $other_distance_split) * ($max_weight / 100);
->>>>>>> origin/master
             $match_percentage = min(1, max(0,
                 $match_percentage + $dist_weight));
 
@@ -195,12 +186,7 @@ class Get_User_Data {
                 "long"=>$other['long'],
                 "name"=>$other['name'],
                 "matched_parts"=>$matched_parts,
-<<<<<<< HEAD
-                "percentage_matched"=>number_format($match_percentage, 2, '.', '')
-            );
-=======
                 "percentage_matched"=>number_format($match_percentage,2));
->>>>>>> origin/master
         }
 
         // If the user doesn't have any matches let them know.
