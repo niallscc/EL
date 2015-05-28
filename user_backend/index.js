@@ -7,19 +7,19 @@ $( document ).ready(function() {
     build_codes_box(get_codes());
     document.getElementById("home_btn").addEventListener("click",show_feed);
     get_connections();
-    
+
 });
 function update_location(){
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(showPosition);
-        
+
     } else {
         x.innerHTML = "Geolocation is not supported by this browser.";
     }
 }
 function showPosition(position) {
-    //x.innerHTML = "Latitude: " + position.coords.latitude + 
-    //"<br>Longitude: " + position.coords.longitude; 
+    //x.innerHTML = "Latitude: " + position.coords.latitude +
+    //"<br>Longitude: " + position.coords.longitude;
     update_location_on_server(position.coords.latitude, position.coords.longitude);
 }
 function update_location_on_server(lat, long){
@@ -77,19 +77,19 @@ function build_profile_pages(pages){
 function go_back(ele){
     document.getElementsByClassName("main_content_container")[0].innerHTML = prev_states.pop();
     document.getElementsByClassName("back_btn")[0].addEventListener("click",go_back)
-    
+
 }
 function open_profile_page(ele){
 
     page_data = profile_pages[parseInt(ele.target.getAttribute("page_index"))].page_data;
     page_data.push(JSON.parse('{"type":"hidden","name":"profile_part","value":"'+ele.target.getAttribute("page")+'"}'));
     container = document.getElementsByClassName("main_content_container")[0];
-    
+
     form = document.createElement("form");
     form.setAttribute("name",ele.target.getAttribute("page"));
-    
+
     table = document.createElement("table");
-    table.className = "profile_page_content"; 
+    table.className = "profile_page_content";
     form.appendChild(table);
     prev_states.push(container.innerHTML);
     container.innerHTML = '';
@@ -135,20 +135,20 @@ function show_connections(matches){
         for (var i = 0; i < matches.length; i++){
             var word_container = document.createElement("div");
                 word_container.className = "new_match";
-                word_container.innerHTML = "Match: " + matches[i].name + "<br> Percentage Compatible: " + (matches[i].percentage_matched*100)+ "%"; 
+                word_container.innerHTML = "Match: " + matches[i].name + "<br> Percentage Compatible: " + (matches[i].percentage_matched*100)+ "%";
                 word_container.addEventListener("click", show_connection);
                 match_container.appendChild(word_container);
         }
     }else{
          var word_container = document.createElement("div");
                 word_container.className = "no_matches";
-                word_container.innerHTML = " No new matches yet. Go outside!"; 
+                word_container.innerHTML = " No new matches yet. Go outside!";
                 match_container.appendChild(word_container);
     }
 
 }
 function show_connection(){
-    
+
 }
 function accept_connection(ele){
 
@@ -168,7 +168,7 @@ function logout(){
 }
 function do_ajax(args){
     var URL = "./resources/get_data.php";
-    var return_val; 
+    var return_val;
     $.ajax({
         url: URL,
         type: "POST",
