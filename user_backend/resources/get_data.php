@@ -22,7 +22,7 @@
                 error_log("method doesn't exist");
                 echo '{"status":"error","message":"Method doesn\'t exist", "error_num":"1"}';
                 //echo $o_get_user_data->$fun_name($_POST);
-            } 
+            }
         }
 
     }else
@@ -115,6 +115,27 @@ class Get_User_Data {
             return json_encode(array("status"=>"failure","message"=>"There are no users in your area."));
         }
 
+        // Find the maximum distance of other users, in miles.
+        // Will not allow to ever be greater than 200 miles.
+        $max_other_distance = 0;
+        $min_other_distance = (int)$local_users[0]["distance"];
+        foreach($local_users as $other) {
+            $other_distance = (int) $other["distance"];
+            $max_other_distance = max($max_other_distance, $other_distance);
+            $min_other_distance = min($min_other_distance, $other_distance);
+<<<<<<< HEAD
+            if ($max_other_distance > 3956) {
+                $max_other_distance = 3956;
+=======
+            if ($max_other_distance > 200) {
+                $max_other_distance = 200;
+>>>>>>> origin/master
+                $min_other_distance = 0;
+                break;
+            }
+        }
+        $other_distance_split = $max_other_distance - $min_other_distance;
+
         // Get a list of other users not yet connected to and rank them by
         // location and compatibility.
         $ret_arr = [];
@@ -123,7 +144,6 @@ class Get_User_Data {
             // Check that there is not yet a connection between the current user
             // and this $other user.
             $connections = perform_query("SELECT * FROM `connections` where `user_id` = ? and `connected_to` = ?","ss",array($args['user_data']['id'], $other['id']));
-            error_log(print_r($connections, 1));
             if(sizeof($connections[0]) > 0){
                 continue;
             }
@@ -146,12 +166,27 @@ class Get_User_Data {
                 }
             }
             $num_not_matched += sizeof($serialized_other);
-            error_log($num_matched . ":" . $num_not_matched);
 
             // Eliminate users that are too incompatible
             if($num_matched < 3) {
                 continue;
             }
+
+            // Calculate the percentage matched by the percentage matched,
+            // weighted by locality to the person.
+            $match_percentage = $num_matched/($num_matched + $num_not_matched);
+<<<<<<< HEAD
+            $other_distance = min(3956, (int)$other["distance"] - $min_other_distance);
+            $max_weight = 5; // in percentages
+            $dist_weight = (1.0 - $other_distance / $other_distance_split) * ($max_weight / 100);
+            error_log($match_percentage . ":" . $other_distance . ":" . $dist_weight);
+=======
+            $other_distance = min(200, (int)$other["distance"] - $min_other_distance);
+            $max_weight = 5; // in percentages
+            $dist_weight = (1.0 - $other_distance / $other_distance_split) * ($max_weight / 100);
+>>>>>>> origin/master
+            $match_percentage = min(1, max(0,
+                $match_percentage + $dist_weight));
 
             // Add this user to the list of compatible users.
             $ret_arr[] = array(
@@ -160,7 +195,12 @@ class Get_User_Data {
                 "long"=>$other['long'],
                 "name"=>$other['name'],
                 "matched_parts"=>$matched_parts,
-                "percentage_matched"=> $num_matched/($num_matched + $num_not_matched));
+<<<<<<< HEAD
+                "percentage_matched"=>number_format($match_percentage, 2, '.', '')
+            );
+=======
+                "percentage_matched"=>number_format($match_percentage,2));
+>>>>>>> origin/master
         }
 
         // If the user doesn't have any matches let them know.
