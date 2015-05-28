@@ -1,0 +1,36 @@
+<link rel="stylesheet" href="./resources/jqtransformplugin/jqtransform.css" type="text/css">
+<script src="http://code.jquery.com/jquery-1.9.0.js"></script>
+<script src="http://code.jquery.com/jquery-migrate-1.2.1.js"></script>
+<script type="text/javascript" src="./resources/jqtransformplugin/jquery.jqtransform.js"></script>
+<form style="margin: 10px 40px 10px 20px;" onsubmit="alert('send form');return false;" method="get" class="jqtransform" class="basicform">
+<div class="rowElem"><label for="inputtext">Input Text:</label><input type="text" name="inputtext"></div>
+<div class="rowElem"><label for="inutpassword">Input Password:</label><input type="password" name="inputpassword"></div>
+<div class="rowElem"><label for="chbox">Checkbox: </label><input type="checkbox" name="chbox"></div>
+<div class="rowElem"><label>Radio :</label>             <input type="radio" checked="" value="oui" name="question" id=""><span>oui</span>           <input type="radio" value="non" name="question" id=""><span>oui</span></div>
+<div class="rowElem"><label>Textarea :</label> <textarea rows="12" cols="40"></textarea></div>
+<div class="rowElem"><label>Select (with short options):</label>            <select name="select">
+<option value="">&nbsp;</option>
+<option value="opt1">&nbsp;</option>
+</select></div>
+<div class="rowElem"><label>Select (with long options) :</label>                 <select name="select">
+<option value="opt1">Big Option test line with more words</option>
+<option value="opt2">Option 2</option>
+<option value="opt3">Option 3</option>
+<option value="opt4">Option 4</option>
+<option value="opt5">Option 5</option>
+<option value="opt6">Option 6</option>
+<option value="opt7">Option 7</option>
+<option value="opt8">Option 8</option>
+</select></div>
+<div class="rowElem"><label>Submit button:</label><input type="submit" value="Send"></div>
+<div class="rowElem"><label>Reset button:</label><input type="reset" value="Cancel"></div>
+<div class="rowElem"><label>Input button:</label><input type="button" value="Button"></div>
+</form>
+
+
+<script type="text/javascript">
+$(function() {
+    //find all form with class jqtransform and apply the plugin
+    $("form.jqtransform").jqTransform();
+});
+</script>
