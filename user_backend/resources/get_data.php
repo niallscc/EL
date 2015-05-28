@@ -107,38 +107,65 @@ class Get_User_Data {
 
         // Gets all information about other users located near to this user.
         $query = "SELECT *, ( 3956 * acos( cos( radians(?) ) * cos( radians( `lat` ) ) * cos( radians( `long` ) - radians(?) ) + sin( radians(?) ) * sin( radians( `lat` ) ) ) ) AS distance FROM `users` HAVING `id` != ? and `profile_complete` = '1' AND `distance` <= ? ORDER BY distance ASC";
-        $res = perform_query($query, "sssss", array($args['user_data']['lat'],$args['user_data']['long'],$args['user_data']['lat'],$args['user_data']['id'], $conn));
-        error_log(print_r($res,1));
+        $local_users = perform_query($query, "sssss", array($args['user_data']['lat'],$args['user_data']['long'],$args['user_data']['lat'],$args['user_data']['id'], $conn));
+        error_log(print_r($local_users,1));
 
         // Check that some amount of users were found.
-        if(sizeof($res[0]) < 1){
+        if(sizeof($local_users[0]) < 1){
             return json_encode(array("status"=>"failure","message"=>"There are no users in your area."));
         }
 
+        // Get a list of other users not yet connected to and rank them by
+        // location and compatibility.
         $ret_arr = [];
-        foreach($res as $row){
+        foreach($local_users as $other){
 
-            // Check for existing connections to this user.
-            $res2 = perform_query("SELECT * FROM `connections` where `user_id` = ? and `connected_to` = ?","ss",array($args['user_data']['id'], $row['id']));
-            error_log(print_r($res2,1));
-            if(!sizeof($res2[0])){
-                $profile =  json_decode($row['profile']);
-                $matched_parts = [];
-                $num_matched   = 0;
-                $num_missed    = 0;
-                foreach($args['user_data']['profile'] as $key => $profile_parts){
-                    foreach($profile_parts as $inner_key =>$inner_val){
-                        if(isset($args['user_data']['profile']->$key->$inner_key)){
-                            $matched_parts[]=$inner_key;
-                            $num_matched ++;
-                        }else{
-                            $num_not_matched ++;
-                        }
-                    }
+            // Check that there is not yet a connection between the current user
+            // and this $other user.
+            $connections = perform_query("SELECT * FROM `connections` where `user_id` = ? and `connected_to` = ?","ss",array($args['user_data']['id'], $other['id']));
+            error_log(print_r($connections, 1));
+            if(sizeof($connections[0]) > 0){
+                continue;
+            }
+
+            // Count the number of matched profile parts for this user.
+            // A simple matching of prefered activities/frequences/etc.
+            $profile =  json_decode($other['profile']);
+            $matched_parts    = [];
+            $num_matched      = 0;
+            $num_not_matched  = 0;
+            $serialized_user  = serialize_user_profile($args["user_data"]["profile"]);
+            $serialized_other = serialize_user_profile($profile);
+            foreach($serialized_user as $interest=>$interest_name) {
+                if (isset($serialized_other[$interest])) {
+                    $num_matched++;
+                    $matched_parts[] = $interest_name;
+                    unset($serialized_other[$interest]);
+                } else {
+                    $num_not_matched++;
                 }
-                if(sizeof($matched_parts) > 3)
-                    $ret_arr[] = array("user_id"=>$row['id'], "lat"=>$row['lat'], "long"=>$row['long'], "name"=>$row['name'],"matched_parts"=>$matched_parts, "percentage_matched"=> $num_matched/($num_matched + $num_not_matched));
-           }
+            }
+            $num_not_matched += sizeof($serialized_other);
+            error_log($num_matched . ":" . $num_not_matched);
+
+            // Eliminate users that are too incompatible
+            if($num_matched < 3) {
+                continue;
+            }
+
+            // Add this user to the list of compatible users.
+            $ret_arr[] = array(
+                "user_id"=>$other['id'],
+                "lat"=>$other['lat'],
+                "long"=>$other['long'],
+                "name"=>$other['name'],
+                "matched_parts"=>$matched_parts,
+                "percentage_matched"=> $num_matched/($num_matched + $num_not_matched));
+        }
+
+        // If the user doesn't have any matches let them know.
+        if (sizeof($ret_arr) === 0) {
+            return json_encode(array("status"=>"failure","message"=>"No compatible users."));
         }
         return json_encode(array("status"=>"success","matches"=>$ret_arr));
     }
