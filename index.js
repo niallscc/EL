@@ -119,8 +119,8 @@ function submit_form(ele){
     var result = do_ajax("function=save_signup_info&"+serialized);
     if( result.status=='success'){
         $(".signup_form").fadeOut( "slow", function() {
-           document.getElementsByClassName("signup_form")[0].innerHTML = "<div class = 'finished' >Signup Complete! <br><br> Check your email to finish the signup process.<br><br> If you don't see the email right away, check your spam.</div>";
-           $(".signup_screen").fadeIn( "fast");
+           document.getElementsByClassName("singup_complete_screen")[0].innerHTML = "<div class = 'finished' >Signup Complete! <br><br> Check your email to finish the signup process.<br><br> If you don't see the email right away, check your spam.</div>";
+           $(".singup_complete_screen").fadeIn( "fast");
         });
     }else
         alert(result.message);  

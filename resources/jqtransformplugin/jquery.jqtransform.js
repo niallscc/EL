@@ -111,6 +111,8 @@
 			$input.addClass("jqTransformInput").wrap('<div class="jqTransformInputWrapper"><div class="jqTransformInputInner"><div></div></div></div>');
 			var $wrapper = $input.parent().parent().parent();
 			$wrapper.css("width", "100%");
+			$wrapper.css("margin-bottom","10px");
+			$wrapper.css("margin-top","10px");
 			$input
 				.focus(function(){$wrapper.addClass("jqTransformInputWrapper_focus");})
 				.blur(function(){$wrapper.removeClass("jqTransformInputWrapper_focus");})

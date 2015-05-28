@@ -116,11 +116,15 @@ if(isset($_COOKIE["endurance_leaders"])) {
                     </tr>
                 </table>
                 <div class = "signup_screen" style = "display:none" >
-               <form id = "form_signup">
-                   <table class ="signup_form"> 
-                   </table>
-                </form>
-            </div>
+                   <form id = "form_signup">
+                       <table class ="signup_form"> 
+                       </table>
+                    </form>
+
+                </div>
+                <div class = "singup_complete_screen" style = "display:none">
+                    
+                </div>
             </div>
         </div>
         
