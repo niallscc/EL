@@ -58,7 +58,6 @@ class Get_User_Data {
                 }else if($row['type'] == 'checkbox'){
                     $res2[$key2]['options'] = json_decode($row['options']);
                     //error_log("my profile is: ". print_r($args['user_data']['profile']->$page['profile_name'],1));
-
                     $res2[$key2]['options'] = $this->parse_options($res2[$key2]['options'], $user_info->$page['profile_name']);
 
                 }else if( ($row['type'] == 'textarea' || $row['type'] == 'text') && isset($user_info->$page['profile_name']->$row['name'])){
@@ -171,7 +170,6 @@ class Get_User_Data {
         $res = perform_query("UPDATE `users` SET `profile` = ? WHERE `id` = ? LIMIT 1", "ss",array(json_encode($user_data['profile']), $user_data['id']));
 
         $dumb = json_decode($this->get_profile_pages(array("user_data"=>web_logged_in())));
-
         return json_encode(array("status"=>"success","message"=>"profile saved", "profile_pages"=>$dumb->profile_pages));  //this is the worst ever im so sorry...
     }
     function logout($args){
