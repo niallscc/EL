@@ -21,8 +21,8 @@ table{
     background-color:white;
     position:relative;
     width:600px;
-    top:100px;
-    left:50px;
+    margin:0 auto;
+    top:20%;
     -webkit-box-shadow: -5px 6px 5px 0px rgba(0,0,0,0.75);
     -moz-box-shadow: -5px 6px 5px 0px rgba(0,0,0,0.75);
     box-shadow: -5px 6px 5px 0px rgba(0,0,0,0.75);

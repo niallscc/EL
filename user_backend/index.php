@@ -20,7 +20,8 @@ if(!isset($_COOKIE["endurance_leaders"])) {
         <link rel="stylesheet" href="./../resources/jqtransformplugin/jqtransform.css" type="text/css">
         <link rel="stylesheet" href="./index.css" type="text/css">
         <link href='https://fonts.googleapis.com/css?family=Roboto:400,100,300,200' rel='stylesheet' type='text/css'>
-        
+          <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+
         <meta name="description" content="Endurance Leaders Connecting Communities">
         <meta name="keywords" content="">
         <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
@@ -36,7 +37,7 @@ if(!isset($_COOKIE["endurance_leaders"])) {
     </head>
     <body>
         <div class ='header'>
-
+            <div class = 'toggle_btn ' onclick = '$( ".left_content_bar" ).slideToggle( "fast" );'> <div style ="margin-left:50px;margin-top:7px" >Menu</div></div>
             <div class = 'header_items' onclick = "logout()">Logout</div>
         </div>
         <div class = 'left_content_bar'>
@@ -64,12 +65,16 @@ if(!isset($_COOKIE["endurance_leaders"])) {
         <div class="main_content">
             
             <div class = 'main_content_container'>
+                
                 <div class = 'new_matches'>
-
+                    <div class = "new_matches_header"> New Matches </div>
+                    <table style =" border-spacing: 10px; border-collapse: separate;"><tr class = "new_matches_container"></tr></table>
                 </div>
-                <!--<div class = "coming_soon_box" style ="text-align:center; font-size:25pt; margin-top:200px;font-weight:100;">
-                    MyAthleteBuddy Matching System Coming Soon!<br><br> Stay Tuned!
-                </div>-->
+                <div class = 'pending_requests'>
+                    <div class = 'pending_requests_header'>Pending Connection Requests</div>
+                     <table style =" border-spacing: 10px; border-collapse: separate;"><tr class = "new_matches_container"><td class='pending_match'>No Pending Connection Requests</td></tr></table>
+                </div>
+
             </div>
         </div>
     </body>

@@ -130,18 +130,18 @@ function get_connections(ele){
 
 }
 function show_connections(matches){
-    var match_container = document.getElementsByClassName("new_matches")[0];
+    var match_container = document.getElementsByClassName("new_matches_container")[0];
     if(matches){
         for (var i = 0; i < matches.length; i++){
-            var word_container = document.createElement("div");
+            var word_container = document.createElement("td");
                 word_container.className = "new_match";
-                word_container.innerHTML = "Match: " + matches[i].name + "<br> Percentage Compatible: " + (parseFloat(matches[i].percentage_matched*100)).toFixed(2)+ "%";
+                word_container.innerHTML = "Match: " + matches[i].name + "<br> Percentage Compatible: " + (Math.round(matches[i].percentage_matched*100))+ "%";
 
                 word_container.addEventListener("click", show_connection);
                 match_container.appendChild(word_container);
         }
     }else{
-         var word_container = document.createElement("div");
+         var word_container = document.createElement("td");
                 word_container.className = "no_matches";
                 word_container.innerHTML = " No new matches yet. Go outside!";
                 match_container.appendChild(word_container);

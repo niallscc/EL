@@ -19,6 +19,23 @@ table{
     table-layout: fixed;
 
 
+}.toggle_btn{
+    background-image: url("./../images/toggle_btn.png");
+    background-size: 40px 40px;
+    background-repeat: no-repeat;
+    /* right: 200px; */
+    width: 40px;
+    position: relative;
+    height: 38px;
+    float: left;
+    margin-left: 23px;
+    width: 40px;
+    border: 1px solid gray;
+    border-radius: 20px;
+}.toggle_btn:hover{
+    cursor:pointer;
+    color:white;
+    background-color:white;
 }
 label{
     padding-bottom:10px;
@@ -121,16 +138,9 @@ box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.75);
     color:#616161;
 }
 .main_content{
-  width: 860px;
-  /* min-width: 500px; */
-  /* margin: 0 auto; */
-  padding:20px;
-  position: absolute;
-  top: 0px;
-  background-color: #00ACC1;
-  height: 100%;
-  left: 360px;
-  overflow-x:hidden;
+    background-color: #00ACC1;
+    height:100%;
+
 }.left_content_bar{
     position:fixed;
     left:0px;
@@ -142,6 +152,9 @@ box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.75);
     color:#616161;
     z-index:99;
     padding:20px;
+    -webkit-box-shadow: 6px 1px 4px 0px rgba(0,0,0,0.75);
+-moz-box-shadow: 6px 1px 4px 0px rgba(0,0,0,0.75);
+box-shadow: 6px 1px 4px 0px rgba(0,0,0,0.75);
 }.content_bar_item{
     margin-top:20px;
     width:300px;
@@ -206,23 +219,38 @@ box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.75);
     padding-top:10px;
     padding-bottom:10px;
 }.main_content_container{
-    height: 550px;
+    height: 100%;
     background-color:white;
     margin:0 auto;
     overflow-y: auto;
-    width: 700px;
+    width: 65%;
+    left:60;
+    padding-left:40px;
     top: 50px;
-    position: relative;
+    position: relative;/*
     -webkit-box-shadow: -5px 6px 5px 0px rgba(0,0,0,0.75);
     -moz-box-shadow: -5px 6px 5px 0px rgba(0,0,0,0.75);
-    box-shadow: -5px 6px 5px 0px rgba(0,0,0,0.75);
+    box-shadow: -5px 6px 5px 0px rgba(0,0,0,0.75);*/
+}.new_matches_header, .pending_requests_header{
+    padding:40px;
+    font-size:30pt;
+}.new_matches{
+    height: 300px;
+    overflow-x:auto;
+}.pending_requests{
+    float:left;
 }
-.new_match{
+.new_match, .pending_match{
     float:left;
     border:1px solid #616161;
     padding:20px;
     margin:20px;
 }.new_match:hover{
+    cursor:pointer;
+    -webkit-box-shadow: -2px 6px 3px 0px rgba(0,0,0,0.75);
+    -moz-box-shadow: -2px 6px 53x 0px rgba(0,0,0,0.75);
+    box-shadow: -2px 6px 3px 0px rgba(0,0,0,0.75);
+}.pending_match{
     cursor:pointer;
     -webkit-box-shadow: -2px 6px 3px 0px rgba(0,0,0,0.75);
     -moz-box-shadow: -2px 6px 53x 0px rgba(0,0,0,0.75);
